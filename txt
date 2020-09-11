@@ -816,7 +816,10 @@ e-d-c-b-a-b-c-d-e
 Input Format
 
 A single line of input containing a string of Roman characters."""]
+def getQuestion():
 
-x=random.randint(0,len(lst))
-
-print(lst[x])
+    x=random.randint(0,len(lst))
+    if(lst[x][0]=='"'):
+        return lst[x][1:]
+    return lst[x]
+print(getQuestion())
