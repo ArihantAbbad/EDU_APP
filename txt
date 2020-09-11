@@ -1,4 +1,4 @@
-import random
+import random #importing random module to find random number
 
 
 lst=["""Write a program which will find all such numbers which are divisible by 7 but are not a multiple of 5,
@@ -815,11 +815,80 @@ e-d-c-b-a-b-c-d-e
 
 Input Format
 
-A single line of input containing a string of Roman characters."""]
-def getQuestion():
+A single line of input containing a string of Roman characters.""","""$ When users post an update on social media,such as a URL, image, status update etc., other users in their network are able to view this new post on their news feed. Users can also see exactly when the post was published, i.e, how many hours, minutes or seconds ago.
 
-    x=random.randint(0,len(lst))
+  Since sometimes posts are published and viewed in different time zones, this can be confusing. You are given two timestamps of one such post that a user can see on his newsfeed in the following format:
+
+  Day dd Mon yyyy hh:mm:ss +xxxx
+
+  Here +xxxx represents the time zone. Your task is to print the absolute difference (in seconds) between them.
+
+  Input Format
+
+  The first line contains T , the number of testcases.
+  Each testcase contains 2 lines, representing time t1 and time t2 .
+
+""",""" There is an array of n integers. There are also 2 disjoint sets, A and B, each containing m integers. You like all the integers in set A and dislike all the integers in set B. Your initial happiness is 0. For each i integer in the array, if i∈A, you add 1 to your happiness. If i∈B, you add -1 to your happiness. Otherwise, your happiness does not change. Output your final happiness at the end.
+  Note: Since A and B are sets, they have no repeated elements. However, the array might contain duplicate elements.
+  
+  Input Format
+
+  The first line contains integers n and m separated by a space.
+  The second line contains n integers, the elements of the array.
+  The third and fourth lines contain m integers, A and B, respectively.
+
+  Output Format
+
+  Output a single integer, your total happiness.
+
+""","""You are given a string S. Suppose a character 'c' occurs consecutively X times in the string. Replace these consecutive occurrences of the character 'c' with (X,c) in the string.
+
+  For a better understanding of the problem, check the explanation.
+
+  Input Format
+
+  A single line of input consisting of the string .
+
+  Output Format
+
+  A single line of output consisting of the modified string.
+
+
+""","""A newly opened multinational brand has decided to base their company logo on the three most common characters in the company name. They are now trying out various combinations of company names and logos based on this condition. Given a string , which is the company name in lowercase letters, your task is to find the top three most common characters in the string.
+
+  Print the three most common characters along with their occurrence count.
+  Sort in descending order of occurrence count.
+  If the occurrence count is the same, sort the characters in alphabetical order.
+  For example, according to the conditions described above,
+
+  GOOGLE would have it's logo with the letters G,O,E.
+
+  Input Format
+
+  A single line of input containing the string S.
+
+  Output Format
+
+  Print the three most common characters along with their occurrence count each on a separate line.
+  Sort output in descending order of occurrence count.
+  If the occurrence count is the same, sort the characters in alphabetical order.
+
+""","""The itertools module standardizes a core set of fast, memory efficient tools that are useful by themselves or in combination. Together, they form an iterator algebra making it possible to construct specialized tools
+  succinctly and efficiently in pure Python.
+  To read more about the functions in this module, check out their documentation here.
+  You are given a list N of lowercase English letters. For a given integer K, you can select any K indices
+  (assume 1-based indexing) with a uniform probability from the list.
+  Find the probability that at least one of the K indices selected will contain the letter: 'a'.
+
+  Input Format
+
+  The input consists of three lines. The first line contains the integer N, denoting the length of the list. The next line consists of N space-separated lowercase English letters, denoting the elements of the list.
+
+  The third and the last line of input contains the integer K, denoting the number of indices to be selected.
+"""]
+def getQuestion():
+    #function return random question
+    x=random.randint(0,len(lst)) #finds random number using random library
     if(lst[x][0]=='"'):
         return lst[x][1:]
-    return lst[x]
-print(getQuestion())
+    return lst[x] #returning question in form of string
