@@ -74,7 +74,15 @@ class _BodyState extends State<Body> {
                   try {
                     final user = await _auth.signInWithEmailAndPassword(
                         email: email, password: password);
+                    
+                    
                     if (user != null) {
+                      //=================
+                      //email verified or not
+                      //=================
+                      if (user.isEmailVerified) {return user.uid;}
+                        else { return null;}
+                      //===============if this not working put this if else before if(user!=null) block
                       SharedPreferences prefs =
                           await SharedPreferences.getInstance();
                       prefs.setString('email', email);
