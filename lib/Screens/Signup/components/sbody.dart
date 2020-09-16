@@ -9,6 +9,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Body extends StatefulWidget {
   @override
@@ -24,6 +25,29 @@ class _BodyState extends State<Body> {
   String name;
   String number;
   bool showSpinner = false;
+  String eerr = " ";
+  String perr = " ";
+
+  String e_validator(email) {
+    if (email ==
+        "[firebase_auth/email-already-in-use] The email address is already in use by another account.") {
+      return "Account with E-mail already Exists! Try Logging in.";
+    } else if (email ==
+        "[firebase_auth/invalid-email] The email address is badly formatted.") {
+      return "Please Type E-mail properly!";
+    } else {
+      return " ";
+    }
+  }
+
+  String p_validator(pass) {
+    if (pass ==
+        "[firebase_auth/weak-password] Password should be at least 6 characters") {
+      return "Password should be at-least 8 characters long!";
+    } else {
+      return " ";
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -71,6 +95,7 @@ class _BodyState extends State<Body> {
               ),
               Text(
                 msg,
+                textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.red,
                 ),
@@ -85,20 +110,11 @@ class _BodyState extends State<Body> {
                     final newUser = await _auth.createUserWithEmailAndPassword(
                         email: email, password: password);
                     if (newUser != null) {
-                      //============================
-                      // email verification link sending
-                      //============================
-                      try {
-                        await newUser.sendEmailVerification();
-                        return newUser.uid;
-                           } 
-                      catch (e) {
-                              print("An error occured while trying to send email  verification");
-                              print(e.message);
-                           }
-                      //========================
-                      //email sent to verify 
-                      //========================
+                      SharedPreferences prefs =
+                          await SharedPreferences.getInstance();
+                      prefs.setString('phone', number);
+                      prefs.setString('name', name);
+
                       _firestore.collection('Students').add({
                         'name': name,
                         'email': email,
@@ -118,9 +134,11 @@ class _BodyState extends State<Body> {
                       showSpinner = false;
                     });
                   } catch (e) {
+                    eerr = e_validator(e.toString());
+                    perr = p_validator(e.toString());
                     setState(() {
                       showSpinner = false;
-                      msg = e.toString();
+                      msg = eerr + perr;
                     });
                   }
                 },
@@ -146,19 +164,3 @@ class _BodyState extends State<Body> {
     );
   }
 }
-
-//     .then(
-// (value) async {
-// SharedPreferences prefs =
-//     await SharedPreferences.getInstance();
-// prefs.setString('email', email);
-// Navigator.push(
-// context,
-// MaterialPageRoute(
-// builder: (context) {
-// return HomePage();
-// },
-// ),
-// );
-// },
-// );

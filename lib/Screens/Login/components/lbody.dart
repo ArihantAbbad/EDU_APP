@@ -21,11 +21,31 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
-  String msg = ' ';
+  String msg = " ";
   final _auth = FirebaseAuth.instance;
   String email;
   String password;
   bool showSpinner = false;
+  String eerr = " ";
+  String perr = " ";
+
+  String e_validator(email) {
+    if (email ==
+        "[firebase_auth/user-not-found] There is no user record corresponding to this identifier. The user may have been deleted.") {
+      return "Incorrect Email address";
+    } else {
+      return " ";
+    }
+  }
+
+  String p_validator(pass) {
+    if (pass ==
+        "[firebase_auth/wrong-password] The password is invalid or the user does not have a password.") {
+      return "Incorrect password";
+    } else {
+      return " ";
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,6 +81,7 @@ class _BodyState extends State<Body> {
               ),
               Text(
                 msg,
+                textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.red,
                 ),
@@ -74,15 +95,7 @@ class _BodyState extends State<Body> {
                   try {
                     final user = await _auth.signInWithEmailAndPassword(
                         email: email, password: password);
-                    
-                    
                     if (user != null) {
-                      //=================
-                      //email verified or not
-                      //=================
-                      if (user.isEmailVerified) {return user.uid;}
-                        else { return null;}
-                      //===============if this not working put this if else before if(user!=null) block
                       SharedPreferences prefs =
                           await SharedPreferences.getInstance();
                       prefs.setString('email', email);
@@ -99,9 +112,11 @@ class _BodyState extends State<Body> {
                       showSpinner = false;
                     });
                   } catch (e) {
+                    eerr = e_validator(e.toString());
+                    perr = p_validator(e.toString());
                     setState(() {
                       showSpinner = false;
-                      msg = e.toString();
+                      msg = eerr + perr;
                     });
                   }
                 },
