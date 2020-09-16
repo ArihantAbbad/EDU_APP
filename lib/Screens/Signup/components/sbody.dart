@@ -85,6 +85,20 @@ class _BodyState extends State<Body> {
                     final newUser = await _auth.createUserWithEmailAndPassword(
                         email: email, password: password);
                     if (newUser != null) {
+                      //============================
+                      // email verification link sending
+                      //============================
+                      try {
+                        await newUser.sendEmailVerification();
+                        return newUser.uid;
+                           } 
+                      catch (e) {
+                              print("An error occured while trying to send email  verification");
+                              print(e.message);
+                           }
+                      //========================
+                      //email sent to verify 
+                      //========================
                       _firestore.collection('Students').add({
                         'name': name,
                         'email': email,
