@@ -40,7 +40,10 @@ class _SubjectState extends State<Subject> {
                     context,
                     MaterialPageRoute(
                       builder: (context) {
-                        return PdfPage();
+                        return PdfPage(
+                          dbname: "Physics",
+                          imgName: "phy",
+                        );
                       },
                     ),
                   );
@@ -77,7 +80,10 @@ class _SubjectState extends State<Subject> {
                     context,
                     MaterialPageRoute(
                       builder: (context) {
-                        return PdfPage();
+                        return PdfPage(
+                          dbname: "Chemistry",
+                          imgName: "chem",
+                        );
                       },
                     ),
                   );
@@ -114,7 +120,10 @@ class _SubjectState extends State<Subject> {
                     context,
                     MaterialPageRoute(
                       builder: (context) {
-                        return PdfPage();
+                        return PdfPage(
+                          dbname: "Maths",
+                          imgName: "math",
+                        );
                       },
                     ),
                   );

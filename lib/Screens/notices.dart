@@ -110,7 +110,7 @@ class _NoticeScreenState extends State<NoticeScreen> {
                         'title': ntitle,
                         'message': nmessage,
                       });
-                      YellowBird();
+                      Navigator.pop(context);
                     } else if (ntitle == null) {
                       Scaffold.of(context).showSnackBar(
                         SnackBar(
@@ -242,11 +242,8 @@ class NoticeStreams extends StatelessWidget {
         for (var notice in notices) {
           final title = notice.data()['title'];
           final messag = notice.data()['message'];
-
-          final noticetile = NoticeTile(
-            title: title,
-            message: messag,
-          );
+          var id = notice.id;
+          final noticetile = NoticeTile(title: title, message: messag, id: id);
           noticetiles.add(noticetile);
         }
         return Expanded(
@@ -265,18 +262,12 @@ class NoticeStreams extends StatelessWidget {
 class NoticeTile extends StatelessWidget {
   final String title;
   final String message;
-  NoticeTile({@required this.title, @required this.message});
+  final id;
+  NoticeTile({@required this.title, @required this.message, this.id});
   @override
   Widget build(BuildContext context) {
-    String minMsg;
     String mintil;
     void getminiMsg() {
-      if (message.length > 30) {
-        minMsg = message.substring(0, 30) + "...";
-      } else {
-        minMsg = message;
-      }
-
       if (title.length > 25) {
         mintil = title.substring(0, 25) + "..";
       } else {
@@ -291,6 +282,57 @@ class NoticeTile extends StatelessWidget {
       children: <Widget>[
         SizedBox(height: 30),
         GestureDetector(
+          onLongPress: () {
+            showDialog(
+              context: context,
+              builder: (context) => AlertDialog(
+                backgroundColor: Colors.white,
+                title: Text(
+                  "Do you want to Delete the notice?",
+                  style: TextStyle(
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
+                ),
+                shape: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(35.0)),
+                actions: <Widget>[
+                  FlatButton(
+                    hoverColor: Colors.grey,
+                    child: Text(
+                      "No",
+                      style: TextStyle(
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.green,
+                      ),
+                    ),
+                    onPressed: () => Navigator.pop(context, false),
+                  ),
+                  FlatButton(
+                    hoverColor: Colors.grey,
+                    child: Text(
+                      "Yes",
+                      style: TextStyle(
+                        color: Colors.red,
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    onPressed: () async {
+                      await _firestore
+                          .collection("notices")
+                          .doc(id)
+                          .delete()
+                          .then((_) {});
+                      Navigator.pop(context, false);
+                    },
+                  ),
+                ],
+              ),
+            );
+          },
           onTap: () {
             Navigator.push(
               context,
@@ -355,9 +397,9 @@ class NoticeTile extends StatelessWidget {
                         height: 5,
                       ),
                       Text(
-                        minMsg,
+                        "Tap to view complete Notice!",
                         style: TextStyle(
-                            fontSize: 16,
+                            fontSize: 15,
                             fontWeight: FontWeight.bold,
                             color: Colors.black),
                       ),

@@ -110,11 +110,6 @@ class _BodyState extends State<Body> {
                     final newUser = await _auth.createUserWithEmailAndPassword(
                         email: email, password: password);
                     if (newUser != null) {
-                      SharedPreferences prefs =
-                          await SharedPreferences.getInstance();
-                      prefs.setString('phone', number);
-                      prefs.setString('name', name);
-
                       _firestore.collection('Students').add({
                         'name': name,
                         'email': email,
