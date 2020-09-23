@@ -3,6 +3,7 @@ import 'package:bubble_bottom_bar/bubble_bottom_bar.dart';
 import 'package:edu_app/Screens/account_info.dart';
 import 'package:edu_app/Screens/subjects.dart';
 import 'package:edu_app/constants.dart';
+import 'package:edu_app/test/test_page.dart';
 import 'package:flutter/material.dart';
 import 'package:edu_app/Screens/notices.dart';
 
@@ -187,11 +188,7 @@ class _HomePageState extends State {
           ],
         ),
         body: (currentIndex == 0)
-            ? Icon(
-                Icons.dashboard,
-                size: 150.0,
-                color: Colors.deepPurple,
-              )
+            ? QuizPage()
             : (currentIndex == 1)
                 ? Icon(
                     Icons.folder_open,
@@ -204,31 +201,7 @@ class _HomePageState extends State {
                         size: 150.0,
                         color: Colors.deepPurple,
                       )
-                    : (currentIndex == 3)
-                        ? Subject()
-                        :
-                        // : FlatButton(
-                        //     onPressed: () async {
-                        //       SharedPreferences prefs =
-                        //           await SharedPreferences.getInstance();
-                        //       prefs.remove('email');
-                        //       _auth.signOut();
-                        //       Navigator.push(
-                        //         context,
-                        //         MaterialPageRoute(
-                        //           builder: (context) {
-                        //             return WelcomeScreen();
-                        //           },
-                        //         ),
-                        //       );
-                        //     },
-                        //     child: Icon(
-                        //       Icons.chat,
-                        //       size: 150.0,
-                        //       color: Colors.deepPurple,
-                        //     ),
-                        //   ),
-                        AccountDetail(),
+                    : (currentIndex == 3) ? Subject() : AccountDetail(),
       ),
     );
   }

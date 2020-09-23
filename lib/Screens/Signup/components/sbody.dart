@@ -66,7 +66,7 @@ class _BodyState extends State<Body> {
               SizedBox(height: size.height * 0.03),
               SvgPicture.asset(
                 "assets/icons/signup.svg",
-                height: size.height * 0.25,
+                height: size.height * 0.30,
               ),
               RoundedInputField(
                 hintText: "Your Name",
@@ -152,6 +152,7 @@ class _BodyState extends State<Body> {
                   );
                 },
               ),
+              SizedBox(height: size.height * 0.02),
             ],
           ),
         ),
